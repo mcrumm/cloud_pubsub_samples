@@ -1,9 +1,7 @@
 defmodule CloudPubsubSamples.Project do
   @moduledoc false
-  alias GoogleApi.PubSub.V1.{
-    Api.Projects,
-    Connection
-  }
+  alias GoogleApi.PubSub.V1.Api.Projects
+  alias GoogleApi.PubSub.V1.Connection
 
   @doc """
   Initializes the project and returns the Project ID.
@@ -58,6 +56,60 @@ defmodule CloudPubsubSamples.Project do
   end
 
   @doc """
+  Creates a new subscription for a Pub/Sub topic.
+  """
+  def create_subscription(project, topic, subscription) do
+    with {:ok, conn} <- new_connection(token_generator()) do
+      Projects.pubsub_projects_subscriptions_create(
+        conn,
+        project,
+        subscription,
+        body: %{topic: topic_path(project, topic)}
+      )
+    end
+  end
+
+  @doc """
+  Deletes a subscription from the current project.
+  """
+  def delete_subscription(project, subscription) do
+    with {:ok, conn} <- new_connection(token_generator()),
+         {:ok, _} <-
+           Projects.pubsub_projects_subscriptions_delete(
+             conn,
+             project,
+             subscription
+           ) do
+      :ok
+    end
+  end
+
+  @doc """
+  Lists subscriptions for the current project.
+  """
+  def list_subscriptions(project) do
+    with {:ok, conn} <- new_connection(token_generator()) do
+      Projects.pubsub_projects_subscriptions_list(
+        conn,
+        project
+      )
+    end
+  end
+
+  @doc """
+  Lists subscriptions for a given topic
+  """
+  def list_subscriptions(project, topic) do
+    with {:ok, conn} <- new_connection(token_generator()) do
+      Projects.pubsub_projects_topics_subscriptions_list(
+        conn,
+        project,
+        topic
+      )
+    end
+  end
+
+  @doc """
   Deletes a Pub/Sub topic.
   """
   def delete_topic(project, topic_name) do
@@ -95,5 +147,12 @@ defmodule CloudPubsubSamples.Project do
   """
   def subscription_path(project, subscription) do
     "projects/#{project}/subscriptions/#{subscription}"
+  end
+
+  @doc """
+  Returns an absolute path for a Cloud Pub/Sub topic.
+  """
+  def topic_path(project, topic) do
+    "projects/#{project}/topics/#{topic}"
   end
 end

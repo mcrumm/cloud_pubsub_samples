@@ -1,5 +1,9 @@
 defmodule CloudPubsubSamples.Project do
   @moduledoc false
+  alias GoogleApi.PubSub.V1.{
+    Api.Projects,
+    Connection
+  }
 
   @doc """
   Initializes the project and returns the Project ID.
@@ -23,6 +27,66 @@ defmodule CloudPubsubSamples.Project do
   def init_for_receive(subscription) do
     with {:ok, project} <- init() do
       {:ok, subscription_path(project, subscription)}
+    end
+  end
+
+  @doc """
+  Lists Pub/Sub topics for the given project.
+  """
+  def list_topics(project) do
+    with {:ok, conn} <- new_connection(token_generator()),
+         {:ok, %{topics: topics}} when is_list(topics) <-
+           Projects.pubsub_projects_topics_list(conn, project) do
+      {:ok, topics}
+    else
+      {:error, _} = err -> err
+      _ -> {:ok, []}
+    end
+  end
+
+  @doc """
+  Creates a new Pub/Sub topic.
+  """
+  def create_topic(project, topic_name) do
+    with {:ok, conn} <- new_connection(token_generator()) do
+      Projects.pubsub_projects_topics_create(
+        conn,
+        project,
+        topic_name
+      )
+    end
+  end
+
+  @doc """
+  Deletes a Pub/Sub topic.
+  """
+  def delete_topic(project, topic_name) do
+    with {:ok, conn} <- new_connection(token_generator()) do
+      Projects.pubsub_projects_topics_delete(
+        conn,
+        project,
+        topic_name
+      )
+    end
+  end
+
+  @token_fetcher {__MODULE__, :fetch_token, []}
+
+  defp new_connection({mod, fun, args}) do
+    with {:ok, token} <- apply(mod, fun, args) do
+      {:ok, Connection.new(token)}
+    end
+  end
+
+  defp token_generator do
+    Application.get_env(:cloud_pubsub_samples, :token_generator, @token_fetcher)
+  end
+
+  @doc false
+  @scope "https://www.googleapis.com/auth/cloud-platform"
+  def fetch_token do
+    with {:ok, %{token: token}} <- Goth.Token.for_scope(@scope) do
+      {:ok, token}
     end
   end
 

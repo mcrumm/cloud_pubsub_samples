@@ -7,7 +7,10 @@ defmodule CloudPubsubSamples.Application do
 
   def start(_type, _args) do
     # List all child processes to be supervised
-    children = []
+    children = [
+      # Starts the Broadway pipeline
+      CloudPubsubSamples.Subscriber
+    ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

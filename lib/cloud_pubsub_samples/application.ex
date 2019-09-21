@@ -9,7 +9,7 @@ defmodule CloudPubsubSamples.Application do
     # List all child processes to be supervised
     children = [
       # Starts the Broadway pipeline
-      CloudPubsubSamples.Subscriber
+      CloudPubsubSamples.Pipeline
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

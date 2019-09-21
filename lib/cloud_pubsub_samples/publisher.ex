@@ -1,28 +1,33 @@
 defmodule CloudPubsubSamples.Publisher do
-  import CloudPubsubSamples.Connections
-
-  import GoogleApi.PubSub.V1.Api.Projects,
-    only: [
-      pubsub_projects_topics_publish: 4
-    ]
-
-  alias GoogleApi.PubSub.V1.Model.{PublishRequest, PubsubMessage}
+  @moduledoc """
+  The Publisher context provides functions to work with Pub/Sub Topics.
+  """
+  alias CloudPubsubSamples.Api.Topics
+  alias GoogleApi.PubSub.V1.Model.PubsubMessage
 
   @doc """
-  Publishes messages to the given project/topic
+  Lists topics for the given project.
+  """
+  defdelegate list_topics(project), to: Topics, as: :list
+
+  @doc """
+  Creates a new Pub/Sub topic on the given project.
+  """
+  defdelegate create_topic(project, topic), to: Topics, as: :create
+
+  @doc """
+  Deletes a topic on the given project.
+  """
+  defdelegate delete_topic(project, subscription), to: Topics, as: :delete
+
+  @doc """
+  Publishes messages to the given project/topic.
   """
   def publish(project, topic, opts \\ []) do
     num_messages = Keyword.get(opts, :num_messages, 10)
     messages = build_messages(num_messages)
 
-    with {:ok, conn} <- new_connection(token_generator()) do
-      pubsub_projects_topics_publish(
-        conn,
-        project,
-        topic,
-        body: %PublishRequest{messages: messages}
-      )
-    end
+    Topics.publish(project, topic, messages)
   end
 
   defp build_messages(count), do: Enum.map(1..count, &build_message/1)

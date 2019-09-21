@@ -1,62 +1,34 @@
 defmodule CloudPubsubSamples.Subscriber do
   @moduledoc """
-  Documentation for CloudPubsubSamples.Subscriber.
+  The subscriber context
   """
-  use Broadway
+  alias CloudPubsubSamples.Api.Subscriptions
 
-  alias Broadway.Message
+  @doc """
+  Lists subscriptions for the given project.
+  """
+  defdelegate list_in_project(project),
+    to: Subscriptions,
+    as: :list
 
-  def start_link(_opts) do
-    Broadway.start_link(__MODULE__,
-      name: __MODULE__,
-      producers: [
-        default: [
-          module: {
-            BroadwayCloudPubSub.Producer,
-            subscription: subscription_path()
-          }
-        ]
-      ],
-      processors: [
-        default: []
-      ],
-      batchers: [
-        default: [
-          batch_size: 10,
-          batch_timeout: 2000
-        ]
-      ]
-    )
-  end
+  @doc """
+  Lists subscriptions within a given topic.
+  """
+  defdelegate list_in_topic(project, topic),
+    to: Subscriptions,
+    as: :list
 
-  @impl Broadway
-  def handle_message(_processor_name, message, _context) do
-    process_message(message)
-  end
+  @doc """
+  Creates a new subscription for a Pub/Sub topic.
+  """
+  defdelegate create_subscription(project, topic, subscription),
+    to: Subscriptions,
+    as: :create
 
-  defp process_message(%Message{data: data, metadata: metadata} = message) do
-    IO.puts("""
-    Received message from Cloud Pub/Sub:
-      Message ID: #{metadata.messageId}
-      Publish Time: #{metadata.publishTime}
-      Attributes:
-        #{inspect(metadata.attributes)}
-
-      The message data:
-        #{inspect(data)}
-    """)
-
-    message
-  end
-
-  @impl Broadway
-  def handle_batch(_, messages, _, _) do
-    messages
-  end
-
-  defp subscription_path do
-    # Subscription path is set automatically when running
-    # `mix subscriber` from the umbrella root.
-    Application.get_env(:cloud_pubsub_samples, :subscription_path)
-  end
+  @doc """
+  Deletes a subscription from the current project.
+  """
+  defdelegate delete_subscription(project, subscription),
+    to: Subscriptions,
+    as: :delete
 end

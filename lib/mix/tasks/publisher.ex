@@ -2,10 +2,10 @@ defmodule Mix.Tasks.Publisher do
   use Mix.Task
   alias CloudPubsubSamples.Project
 
-  @shortdoc "Commands for Cloud Pub/Sub Publishing"
+  @shortdoc "Commands for Cloud Pub/Sub Topics"
 
   @moduledoc """
-  Commands for interacting with Cloud Pub/Sub subscriptions.
+  Commands for interacting with Cloud Pub/Sub topics.
 
   **Commands**
 
@@ -50,5 +50,9 @@ defmodule Mix.Tasks.Publisher do
       {:error, reason} ->
         raise "Error listing topics, reason: #{inspect(reason)}"
     end
+  end
+
+  def run(["publish" | args]) do
+    Mix.Tasks.Publisher.Publish.run(args)
   end
 end

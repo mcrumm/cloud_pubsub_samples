@@ -1,7 +1,7 @@
 defmodule CloudPubsubSamples.Project do
   @moduledoc false
+  import CloudPubsubSamples.Connections
   alias GoogleApi.PubSub.V1.Api.Projects
-  alias GoogleApi.PubSub.V1.Connection
 
   @doc """
   Initializes the project and returns the Project ID.
@@ -119,26 +119,6 @@ defmodule CloudPubsubSamples.Project do
         project,
         topic_name
       )
-    end
-  end
-
-  @token_fetcher {__MODULE__, :fetch_token, []}
-
-  defp new_connection({mod, fun, args}) do
-    with {:ok, token} <- apply(mod, fun, args) do
-      {:ok, Connection.new(token)}
-    end
-  end
-
-  defp token_generator do
-    Application.get_env(:cloud_pubsub_samples, :token_generator, @token_fetcher)
-  end
-
-  @doc false
-  @scope "https://www.googleapis.com/auth/cloud-platform"
-  def fetch_token do
-    with {:ok, %{token: token}} <- Goth.Token.for_scope(@scope) do
-      {:ok, token}
     end
   end
 

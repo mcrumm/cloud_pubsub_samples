@@ -9,15 +9,9 @@ defmodule Mix.Tasks.Publisher.Create do
 
   @impl true
   def run(project, [topic_name | _args]) do
-    case Publisher.create_topic(project, topic_name) do
-      {:ok, topic} ->
-        Mix.shell().info("Created topic #{topic.name}")
-        :ok
-
-      {:error, reason} ->
-        Mix.shell().error("""
-        Error creating topic: #{inspect(reason)}
-        """)
+    with {:ok, topic} <- Publisher.create_topic(project, topic_name) do
+      Mix.shell().info("Created topic #{topic.name}")
+      :ok
     end
   end
 end

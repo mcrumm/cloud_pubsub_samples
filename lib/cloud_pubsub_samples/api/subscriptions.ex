@@ -36,13 +36,15 @@ defmodule CloudPubsubSamples.Api.Subscriptions do
   Creates a new subscription for a Pub/Sub topic.
   """
   def create(project, topic, subscription) do
-    with {:ok, conn} <- new_connection(token_generator()) do
-      pubsub_projects_subscriptions_create(
-        conn,
-        project,
-        subscription,
-        body: %{topic: topic_path(project, topic)}
-      )
+    with {:ok, conn} <- new_connection(token_generator()),
+         {:ok, response} <-
+           pubsub_projects_subscriptions_create(
+             conn,
+             project,
+             subscription,
+             body: %{topic: topic_path(project, topic)}
+           ) do
+      {:ok, response}
     end
   end
 
@@ -50,9 +52,8 @@ defmodule CloudPubsubSamples.Api.Subscriptions do
   Deletes a subscription from the current project.
   """
   def delete(project, subscription) do
-    with {:ok, conn} <- new_connection(token_generator()),
-         {:ok, _} <- pubsub_projects_subscriptions_delete(conn, project, subscription) do
-      :ok
+    with {:ok, conn} <- new_connection(token_generator()) do
+      pubsub_projects_subscriptions_delete(conn, project, subscription)
     end
   end
 end

@@ -6,18 +6,12 @@ defmodule Mix.Tasks.Subscriber.ListInProject do
 
   @impl true
   def run(project, _) do
-    case Subscriber.list_in_project(project) do
-      {:ok, subscriptions} ->
-        shell = Mix.shell()
-        shell.info("Listing subscriptions for projects/#{project}:")
+    with {:ok, subscriptions} <- Subscriber.list_in_project(project) do
+      shell = Mix.shell()
+      shell.info("Listing subscriptions for projects/#{project}:")
 
-        Enum.each(subscriptions, fn s -> shell.info(s.name) end)
-        :ok
-
-      {:error, reason} ->
-        Mix.shell().error("""
-        Failed to fetch subscriptions, reason: #{inspect(reason)}
-        """)
+      Enum.each(subscriptions, fn s -> shell.info(s.name) end)
+      :ok
     end
   end
 end

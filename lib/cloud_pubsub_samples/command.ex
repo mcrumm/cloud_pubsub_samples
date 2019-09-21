@@ -2,7 +2,6 @@ defmodule CloudPubsubSamples.Command do
   @moduledoc """
   A generic Mix Task for building Pub/Sub commands.
   """
-
   @callback run(project :: String.t(), args :: [binary()]) :: no_return
 
   defmacro __using__(_) do
@@ -21,17 +20,28 @@ defmodule CloudPubsubSamples.Command do
   """
   @spec run(task :: module(), args :: [binary]) :: no_return
   def run(task, args) do
-    case CloudPubsubSamples.Command.init() do
+    case init() do
       {:ok, project} ->
-        task.run(project, args)
+        run(task, project, args)
 
       {:error, reason} ->
         Mix.shell().error(reason)
     end
   end
 
-  @doc false
-  def init do
+  def run(task, project, args) do
+    case task.run(project, args) do
+      {:error, reason} ->
+        message = __MODULE__.ErrorFormatter.format(task, reason)
+        Mix.shell().error(message)
+        :ok
+
+      _ ->
+        :ok
+    end
+  end
+
+  defp init do
     with {:ok, _} <- Application.ensure_all_started(:goth),
          {:ok, project} <- Goth.Config.get(:project_id) do
       {:ok, project}

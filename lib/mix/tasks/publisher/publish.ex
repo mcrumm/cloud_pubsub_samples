@@ -5,22 +5,16 @@ defmodule Mix.Tasks.Publisher.Publish do
   alias CloudPubsubSamples.Publisher
 
   def run(project, [topic | _args]) do
-    case Publisher.publish(project, topic) do
-      {:ok, response} ->
-        %{messageIds: message_ids} = response
+    with {:ok, response} <- Publisher.publish(project, topic) do
+      %{messageIds: message_ids} = response
 
-        shell = Mix.shell()
+      shell = Mix.shell()
 
-        Enum.each(message_ids, fn id ->
-          shell.info("Published Message #{id}")
-        end)
+      Enum.each(message_ids, fn id ->
+        shell.info("Published Message #{id}")
+      end)
 
-        :ok
-
-      {:error, reason} ->
-        Mix.shell().error("""
-        Error publishing messages, reason: #{inspect(reason)}
-        """)
+      :ok
     end
   end
 end

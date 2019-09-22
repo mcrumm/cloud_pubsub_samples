@@ -19,18 +19,19 @@ Now you're ready to setup your Google Cloud Project!
 
 ## Getting Started
 
-**Create your Google Cloud Project**
+### Create your Google Cloud Project
 
 First, you need to create a Google Cloud Project and a Service Account with
 the proper permissions for managing Cloud Pub/Sub resources.
 
 The Broadway project on HexDocs has a great
 [tutorial for Google Cloud Project setup](https://hexdocs.pm/broadway/google-cloud-pubsub.html#setup-cloud-pub-sub-project).
+
 You can skip the steps about creating a topic and subscription, but be sure to
 create your Service Account, bind it with the proper permissions, and create a
 credentials file for authentication.
 
-**Configure Application Credentials**
+### Configure Application Credentials
 
 With credentials in hand, we can configure our environment to authenticate with
 Google. By default, this app will look for credentials in the
@@ -39,7 +40,7 @@ the absolute path to your credentials file:
 
     export GOOGLE_APPLICATION_CREDENTIALS="/path/to/my/credentials.json"
 
-**Create Resources**
+### Create Resources
 
 To use Google Cloud Pub/Sub, we need a **topic** and a **subscription**.
 Messages are published to topics and received by subscriptions.
@@ -56,30 +57,31 @@ And a subscription for the topic:
 
 > The Google Cloud Project is derived from the application credentials.
 
-**Start listening for messages**
+### Start listening for messages
 
 Start a subscriber for the subscription we just created:
 
     mix subscriber.start test-subscription
     Listening for messages on projects/test-project/subscriptions/test-subscription - Press Ctrl+C to exit
 
-**Publish messages**
+### Publish messages
 
 Open a new tab.  Don't forget to export your application credentials.
 
 Publish some messages to the topic:
 
+
     mix publisher.publish test-topic
-    Published Message 1
-    Published Message 2
-    Published Message 3
-    Published Message 4
-    Published Message 5
-    Published Message 6
-    Published Message 7
-    Published Message 8
-    Published Message 9
-    Published Message 10
+    Published message 1
+    Published message 2
+    Published message 3
+    Published message 4
+    Published message 5
+    Published message 6
+    Published message 7
+    Published message 8
+    Published message 9
+    Published message 10
 
 Switch back to the subscriber tab.  You should see output similar to:
 
@@ -111,17 +113,13 @@ The following commands are made available as Mix tasks:
 
 To learn more about a given command and its arguments, run:
 
-```sh
-mix help <command>
-```
+    mix help <command>
 
 ## Documentation
 
 You can build the documentation for this project by running the docs command:
 
-```sh
-MIX_ENV=docs mix docs
-```
+    MIX_ENV=docs mix docs
 
 The generated docs will be available at `doc/index.html`.
 

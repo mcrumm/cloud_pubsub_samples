@@ -20,7 +20,7 @@ defmodule Mix.Tasks.Publisher.Publish do
       shell = Mix.shell()
 
       Enum.each(message_ids, fn id ->
-        shell.info("Published Message #{id}")
+        shell.info("Published message #{id}")
       end)
 
       :ok

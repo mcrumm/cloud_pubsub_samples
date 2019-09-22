@@ -19,7 +19,81 @@ Now you're ready to setup your Google Cloud Project!
 
 ## Getting Started
 
-**TODO**
+**Create your Google Cloud Project**
+
+First, you need to create a Google Cloud Project and a Service Account with
+the proper permissions for managing Cloud Pub/Sub resources.
+
+The Broadway project on HexDocs has a great
+[tutorial for Google Cloud Project setup](https://hexdocs.pm/broadway/google-cloud-pubsub.html#setup-cloud-pub-sub-project).
+You can skip the steps about creating a topic and subscription, but be sure to
+create your Service Account, bind it with the proper permissions, and create a
+credentials file for authentication.
+
+**Configure Application Credentials**
+
+With credentials in hand, we can configure our environment to authenticate with
+Google. By default, this app will look for credentials in the
+`GOOGLE_APPLICATION_CREDENTIALS` System environment variable. Be sure to set
+the absolute path to your credentials file:
+
+    export GOOGLE_APPLICATION_CREDENTIALS="/path/to/my/credentials.json"
+
+**Create Resources**
+
+To use Google Cloud Pub/Sub, we need a **topic** and a **subscription**.
+Messages are published to topics and received by subscriptions.
+
+Create a topic:
+
+    mix publisher.create test-topic
+    Created topic projects/test-project/topics/test-topic
+
+And a subscription for the topic:
+
+    mix subscriber.create test-topic test-subscription
+    Created subscription projects/test-project/subscriptions/test-subscription
+
+> The Google Cloud Project is derived from the application credentials.
+
+**Start listening for messages**
+
+Start a subscriber for the subscription we just created:
+
+    mix subscriber.start test-subscription
+    Listening for messages on projects/test-project/subscriptions/test-subscription - Press Ctrl+C to exit
+
+**Publish messages**
+
+Open a new tab.  Don't forget to export your application credentials.
+
+Publish some messages to the topic:
+
+    mix publisher.publish test-topic
+    Published Message 1
+    Published Message 2
+    Published Message 3
+    Published Message 4
+    Published Message 5
+    Published Message 6
+    Published Message 7
+    Published Message 8
+    Published Message 9
+    Published Message 10
+
+Switch back to the subscriber tab.  You should see output similar to:
+
+    Received message from Cloud Pub/Sub:
+      Message ID: 757042663206915
+      Publish Time: 2019-09-22 19:16:25.183Z
+      Attributes:
+        nil
+
+      The message data:
+        "Message number 1"
+
+    Received message from Cloud Pub/Sub:
+      ...
 
 ## Commands
 

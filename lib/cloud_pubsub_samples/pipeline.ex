@@ -6,14 +6,24 @@ defmodule CloudPubsubSamples.Pipeline do
 
   alias Broadway.Message
 
-  def start_link(_opts) do
+  def start_link(opts) do
+    {enabled, opts} = Keyword.pop(opts, :enabled, true)
+
+    do_start_link(enabled, opts)
+  end
+
+  defp do_start_link(false, _), do: :ignore
+
+  defp do_start_link(true, opts) do
+    subscription = Keyword.fetch!(opts, :subscription)
+
     Broadway.start_link(__MODULE__,
       name: __MODULE__,
       producers: [
         default: [
           module: {
             BroadwayCloudPubSub.Producer,
-            subscription: subscription_path()
+            subscription: subscription
           }
         ]
       ],
@@ -52,11 +62,5 @@ defmodule CloudPubsubSamples.Pipeline do
   @impl Broadway
   def handle_batch(_, messages, _, _) do
     messages
-  end
-
-  defp subscription_path do
-    # Subscription path is set automatically when running
-    # `mix subscriber` from the umbrella root.
-    Application.get_env(:cloud_pubsub_samples, :subscription_path)
   end
 end

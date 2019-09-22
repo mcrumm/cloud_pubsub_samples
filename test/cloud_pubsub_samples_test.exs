@@ -1,8 +1,7 @@
 defmodule CloudPubsubSamplesTest do
   use ExUnit.Case
-  doctest CloudPubsubSamples
 
-  test "greets the world" do
-    assert CloudPubsubSamples.hello() == :world
+  test "the truth" do
+    assert 1 + 1 == 2
   end
 end

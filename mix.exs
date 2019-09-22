@@ -1,12 +1,10 @@
 defmodule CloudPubsubSamples.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
-
   def project do
     [
       app: :cloud_pubsub_samples,
-      version: @version,
+      version: "1.0.0-dev",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -14,7 +12,6 @@ defmodule CloudPubsubSamples.MixProject do
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger],
@@ -22,7 +19,6 @@ defmodule CloudPubsubSamples.MixProject do
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:broadway_cloud_pub_sub, "~> 0.4.0"},
@@ -34,7 +30,7 @@ defmodule CloudPubsubSamples.MixProject do
   defp docs do
     [
       main: "CloudPubsubSamples",
-      source_ref: "master",
+      source_ref: "latest",
       source_url: "https://github.com/mcrumm/cloud_pubsub_samples"
     ]
   end

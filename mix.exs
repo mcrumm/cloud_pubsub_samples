@@ -34,7 +34,7 @@ defmodule CloudPubsubSamples.MixProject do
   defp docs do
     [
       main: "CloudPubsubSamples",
-      source_ref: "v#{@version}",
+      source_ref: "master",
       source_url: "https://github.com/mcrumm/cloud_pubsub_samples"
     ]
   end

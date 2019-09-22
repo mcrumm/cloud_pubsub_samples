@@ -33,7 +33,7 @@ The following commands are made available as Mix tasks:
     mix subscriber.delete          # Deletes a subscription for a Cloud Pub/Sub topic
     mix subscriber.list_in_project # Lists Cloud Pub/Sub subscriptions for the current project
     mix subscriber.list_in_topic   # Lists Cloud Pub/Sub subscriptions for a topic
-    mix subscriber.receive         # Listens for messages on a Cloud Pub/Sub subscription
+    mix subscriber.start           # Listens for messages on a Cloud Pub/Sub subscription
 
 To learn more about a given command and its arguments, run:
 

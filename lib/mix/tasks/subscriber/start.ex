@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Subscriber.Receive do
+defmodule Mix.Tasks.Subscriber.Start do
   use CloudPubsubSamples.Command
   @shortdoc "Listens for messages on a Cloud Pub/Sub subscription"
 
@@ -9,7 +9,7 @@ defmodule Mix.Tasks.Subscriber.Receive do
 
   ## Usage
 
-        mix subscriber.receive subscription_name
+        mix subscriber.start subscription_name
   """
   import CloudPubsubSamples.Project, only: [subscription_path: 2]
 

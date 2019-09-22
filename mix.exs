@@ -1,13 +1,16 @@
 defmodule CloudPubsubSamples.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+
   def project do
     [
       app: :cloud_pubsub_samples,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      docs: docs()
     ]
   end
 
@@ -23,7 +26,16 @@ defmodule CloudPubsubSamples.MixProject do
   defp deps do
     [
       {:broadway_cloud_pub_sub, "~> 0.4.0"},
-      {:goth, "~> 1.0"}
+      {:goth, "~> 1.0"},
+      {:ex_doc, "~> 0.21", only: :docs}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "CloudPubsubSamples",
+      source_ref: "v#{@version}",
+      source_url: "https://github.com/mcrumm/cloud_pubsub_samples"
     ]
   end
 end

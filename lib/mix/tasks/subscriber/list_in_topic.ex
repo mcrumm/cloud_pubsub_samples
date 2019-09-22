@@ -1,7 +1,16 @@
 defmodule Mix.Tasks.Subscriber.ListInTopic do
   use CloudPubsubSamples.Command
-  @shortdoc "Lists subscriptions for the given topic"
+  @shortdoc "Lists Cloud Pub/Sub subscriptions for a topic"
 
+  @moduledoc """
+  Lists the Google Cloud Pub/Sub subscriptions for the current project.
+
+  The topic must exist in the current project.
+
+  ## Usage
+
+        mix subscriber.list_in_topic topic_name
+  """
   alias CloudPubsubSamples.{Project, Subscriber}
 
   @impl true

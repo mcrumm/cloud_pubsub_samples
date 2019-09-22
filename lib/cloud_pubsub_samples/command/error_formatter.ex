@@ -1,4 +1,6 @@
 defmodule CloudPubsubSamples.Command.ErrorFormatter do
+  @moduledoc false
+
   alias CloudPubsubSamples.Model.ErrorResponse
 
   def format(cmd, {:error, %Tesla.Env{} = env}), do: format(cmd, env)

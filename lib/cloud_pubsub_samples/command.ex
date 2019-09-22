@@ -1,7 +1,5 @@
 defmodule CloudPubsubSamples.Command do
-  @moduledoc """
-  A generic Mix Task for building Pub/Sub commands.
-  """
+  @moduledoc false
   @callback run(project :: String.t(), args :: [binary()]) :: no_return
 
   defmacro __using__(_) do
@@ -9,6 +7,7 @@ defmodule CloudPubsubSamples.Command do
       use Mix.Task
       @behaviour unquote(__MODULE__)
 
+      @doc false
       def run(args) do
         CloudPubsubSamples.Command.run(__MODULE__, args)
       end

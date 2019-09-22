@@ -4,6 +4,10 @@ defmodule Mix.Tasks.Publisher.Create do
 
   @moduledoc """
   Creates a Google Cloud Pub/Sub topic on the current project.
+
+  ## Usage
+
+        mix publisher.create topic_name
   """
   alias CloudPubsubSamples.Publisher
 

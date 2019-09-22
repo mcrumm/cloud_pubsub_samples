@@ -4,6 +4,10 @@ defmodule Mix.Tasks.Publisher.Delete do
 
   @moduledoc """
   Deletes a Google Cloud Pub/Sub topic on the current project.
+
+  ## Usage
+
+        mix publisher.delete topic_name
   """
   import CloudPubsubSamples.Project, only: [topic_path: 2]
   alias CloudPubsubSamples.Publisher

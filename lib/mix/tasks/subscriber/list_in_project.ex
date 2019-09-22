@@ -1,7 +1,14 @@
 defmodule Mix.Tasks.Subscriber.ListInProject do
   use CloudPubsubSamples.Command
-  @shortdoc "Lists subscriptions for the current project"
+  @shortdoc "Lists Cloud Pub/Sub subscriptions for the current project"
 
+  @moduledoc """
+  Lists the Google Cloud Pub/Sub subscriptions for all topics in the current project.
+
+  ## Usage
+
+        mix subscriber.list_in_project
+  """
   alias CloudPubsubSamples.Subscriber
 
   @impl true

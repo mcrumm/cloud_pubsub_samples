@@ -1,7 +1,5 @@
 defmodule CloudPubsubSamples.Project do
-  @moduledoc """
-  Path helpers for Cloud Pub/Sub projects.
-  """
+  @moduledoc false
 
   @doc """
   Returns an absolute path for a Cloud Pub/Sub subscription.

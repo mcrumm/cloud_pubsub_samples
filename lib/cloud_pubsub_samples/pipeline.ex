@@ -1,11 +1,17 @@
 defmodule CloudPubsubSamples.Pipeline do
   @moduledoc """
   A Broadway pipeline for consuming Cloud Pub/Sub messages.
+
+  ## Options
+
+    * `subscription` - The absolute path to the Cloud Pub/Sub subscription. Example: "projects/foo/subscriptions/bar"
+    * `enabled` - Optional. When false, disables the pipeline. Used mostly for testing. Defaults to true.
   """
   use Broadway
 
   alias Broadway.Message
 
+  @doc false
   def start_link(opts) do
     {enabled, opts} = Keyword.pop(opts, :enabled, true)
 

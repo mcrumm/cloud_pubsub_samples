@@ -1,7 +1,5 @@
 defmodule CloudPubsubSamples.Subscriber do
-  @moduledoc """
-  The subscriber context
-  """
+  @moduledoc false
   alias CloudPubsubSamples.Api.Subscriptions
 
   @doc """

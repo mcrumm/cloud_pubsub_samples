@@ -1,13 +1,15 @@
 defmodule Mix.Tasks.Subscriber.Receive do
   use CloudPubsubSamples.Command
-  @shortdoc "Listens for messages on a Pub/Sub subscription"
+  @shortdoc "Listens for messages on a Cloud Pub/Sub subscription"
 
   @moduledoc """
   Starts listening for messages on the given subscription.
 
   The `--no-halt` flag is automatically added.
 
-  Usage: `mix subscriber.receive <subscription_name>`
+  ## Usage
+
+        mix subscriber.receive subscription_name
   """
   import CloudPubsubSamples.Project, only: [subscription_path: 2]
 

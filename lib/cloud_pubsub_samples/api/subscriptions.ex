@@ -1,4 +1,5 @@
 defmodule CloudPubsubSamples.Api.Subscriptions do
+  @moduledoc false
   import CloudPubsubSamples.Api.Connections
   import CloudPubsubSamples.Project
 

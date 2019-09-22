@@ -2,6 +2,14 @@ defmodule Mix.Tasks.Publisher.Publish do
   use CloudPubsubSamples.Command
   @shortdoc "Publishes messages to a Cloud Pub/Sub topic"
 
+  @moduledoc """
+  Publishes messages to a Google Cloud Pub/Sub topic.
+
+  ## Usage
+
+        mix publisher.publish topic_name
+  """
+
   alias CloudPubsubSamples.Publisher
 
   def run(project, [topic | _args]) do

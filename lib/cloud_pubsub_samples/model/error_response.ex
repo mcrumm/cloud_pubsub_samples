@@ -1,4 +1,5 @@
 defmodule CloudPubsubSamples.Model.ErrorResponse do
+  @moduledoc false
   use GoogleApi.Gax.ModelBase
 
   @type t :: %__MODULE__{

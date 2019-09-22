@@ -1,4 +1,5 @@
 defmodule CloudPubsubSamples.Api.Topics do
+  @moduledoc false
   import CloudPubsubSamples.Api.Connections
 
   import GoogleApi.PubSub.V1.Api.Projects,

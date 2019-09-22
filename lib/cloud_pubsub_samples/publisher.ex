@@ -1,7 +1,5 @@
 defmodule CloudPubsubSamples.Publisher do
-  @moduledoc """
-  The Publisher context provides functions to work with Pub/Sub Topics.
-  """
+  @moduledoc false
   alias CloudPubsubSamples.Api.Topics
   alias GoogleApi.PubSub.V1.Model.PubsubMessage
 

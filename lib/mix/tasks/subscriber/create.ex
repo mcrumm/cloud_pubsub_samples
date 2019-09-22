@@ -1,7 +1,16 @@
 defmodule Mix.Tasks.Subscriber.Create do
   use CloudPubsubSamples.Command
-  @shortdoc "Creates a subscription for a Pub/Sub topic"
+  @shortdoc "Creates a subscription for a Cloud Pub/Sub topic"
 
+  @moduledoc """
+  Creates a Google Cloud Pub/Sub subscription for the given topic.
+
+  The topic must exist on the current project.
+
+  ## Usage
+
+        mix subscriber.create topic_name subscription_name
+  """
   alias CloudPubsubSamples.Subscriber
 
   @impl true

@@ -121,5 +121,5 @@ You can build the documentation for this project by running the docs command:
 
     MIX_ENV=docs mix docs
 
-The generated docs will be available at `doc/index.html`.
+The generated docs will be available at `docs/index.html`.
 

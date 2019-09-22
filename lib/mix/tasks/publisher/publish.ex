@@ -12,6 +12,7 @@ defmodule Mix.Tasks.Publisher.Publish do
 
   alias CloudPubsubSamples.Publisher
 
+  @impl true
   def run(project, [topic | _args]) do
     with {:ok, response} <- Publisher.publish(project, topic) do
       %{messageIds: message_ids} = response

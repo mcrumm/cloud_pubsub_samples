@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.21.2">
+    <meta name="project" content="cloud_pubsub_samples v1.0.0-dev">
+    <title>CloudPubsubSamples — cloud_pubsub_samples v1.0.0-dev</title>
+    <link rel="stylesheet" href="dist/html-de2388dc2f8074b0a4db.css" />
+    <script src="dist/sidebar_items-0f3066f24d.js"></script>
+      <script src="docs_config.js"></script>
+    <script async src="dist/html-de2388dc2f8074b0a4db.js"></script>
+    
+  </head>
+  <body data-type="modules">
+    <script>try { if(localStorage.getItem('night-mode') === 'true') document.body.className += ' night-mode'; } catch (e) { }</script>
+    <div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button">
+      <span class="icon-search" aria-hidden="true"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button">
+      <span class="icon-cross" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" id="search-list" class="search-input" placeholder="Search..." aria-label="Search" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="CloudPubsubSamples.html" class="sidebar-projectName">
+cloud_pubsub_samples      </a>
+      <h2 class="sidebar-projectVersion">
+        v1.0.0-dev
+      </h2>
+    </div>
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+
+
+      <li><a id="tasks-list" href="#full-list">Mix Tasks</a></li>
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+
+      <h1>
+        <small class="app-vsn">cloud_pubsub_samples v1.0.0-dev</small>
+CloudPubsubSamples        
+          <a href="https://github.com/mcrumm/cloud_pubsub_samples/blob/master/lib/cloud_pubsub_samples.ex#L1" title="View Source" class="view-source" rel="help">
+            <span class="icon-code" aria-hidden="true"></span>
+            <span class="sr-only">View Source</span>
+          </a>
+      </h1>
+
+
+        <section id="moduledoc">
+<p>This Elixir app contains samples for working with Google Cloud Pub/Sub.</p>
+<h2 id="module-installation" class="section-heading">
+  <a href="#module-installation" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Installation
+</h2>
+
+<p>First, clone this repository:</p>
+<pre><code class="sh">git clone https://github.com/mcrumm/cloud_pubsub_samples.git
+cd cloud_pubsub_samples</code></pre>
+<p>Next, install and compile the app:</p>
+<pre><code class="sh">mix do deps.get, compile</code></pre>
+<p>Now you&#39;re ready to setup your Google Cloud Project!</p>
+<h2 id="module-getting-started" class="section-heading">
+  <a href="#module-getting-started" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Getting Started
+</h2>
+
+<h3 id="module-create-your-google-cloud-project" class="section-heading">
+  <a href="#module-create-your-google-cloud-project" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Create your Google Cloud Project
+</h3>
+
+<p>First, you need to create a Google Cloud Project and a Service Account with
+the proper permissions for managing Cloud Pub/Sub resources.</p>
+<p>The Broadway project on HexDocs has a great
+<a href="https://hexdocs.pm/broadway/google-cloud-pubsub.html#setup-cloud-pub-sub-project">tutorial for Google Cloud Project setup</a>.</p>
+<p>You can skip the steps about creating a topic and subscription, but be sure to
+create your Service Account, bind it with the proper permissions, and create a
+credentials file for authentication.</p>
+<h3 id="module-configure-application-credentials" class="section-heading">
+  <a href="#module-configure-application-credentials" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Configure Application Credentials
+</h3>
+
+<p>With credentials in hand, we can configure our environment to authenticate with
+Google. By default, this app will look for credentials in the
+<code class="inline">GOOGLE_APPLICATION_CREDENTIALS</code> System environment variable. Be sure to set
+the absolute path to your credentials file:</p>
+<pre><code class="nohighlight makeup elixir"><span class="n">export</span><span class="w"> </span><span class="nc">GOOGLE_APPLICATION_CREDENTIALS</span><span class="o">=</span><span class="s">&quot;/path/to/my/credentials.json&quot;</span></code></pre>
+<h3 id="module-create-resources" class="section-heading">
+  <a href="#module-create-resources" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Create Resources
+</h3>
+
+<p>To use Google Cloud Pub/Sub, we need a <strong>topic</strong> and a <strong>subscription</strong>.
+Messages are published to topics and received by subscriptions.</p>
+<p>Create a topic:</p>
+<pre><code class="nohighlight makeup elixir"><span class="n">mix</span><span class="w"> </span><span class="n">publisher</span><span class="o">.</span><span class="n">create</span><span class="w"> </span><span class="n">test</span><span class="o">-</span><span class="n">topic</span><span class="w">
+</span><span class="nc">Created</span><span class="w"> </span><span class="n">topic</span><span class="w"> </span><span class="n">projects</span><span class="o">/</span><span class="n">test</span><span class="o">-</span><span class="n">project</span><span class="o">/</span><span class="n">topics</span><span class="o">/</span><span class="n">test</span><span class="o">-</span><span class="n">topic</span></code></pre>
+<p>And a subscription for the topic:</p>
+<pre><code class="nohighlight makeup elixir"><span class="n">mix</span><span class="w"> </span><span class="n">subscriber</span><span class="o">.</span><span class="n">create</span><span class="w"> </span><span class="n">test</span><span class="o">-</span><span class="n">topic</span><span class="w"> </span><span class="n">test</span><span class="o">-</span><span class="n">subscription</span><span class="w">
+</span><span class="nc">Created</span><span class="w"> </span><span class="n">subscription</span><span class="w"> </span><span class="n">projects</span><span class="o">/</span><span class="n">test</span><span class="o">-</span><span class="n">project</span><span class="o">/</span><span class="n">subscriptions</span><span class="o">/</span><span class="n">test</span><span class="o">-</span><span class="n">subscription</span></code></pre>
+<blockquote><p>The Google Cloud Project is derived from the application credentials.</p>
+</blockquote>
+<h3 id="module-start-listening-for-messages" class="section-heading">
+  <a href="#module-start-listening-for-messages" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Start listening for messages
+</h3>
+
+<p>Start a subscriber for the subscription we just created:</p>
+<pre><code class="nohighlight makeup elixir"><span class="n">mix</span><span class="w"> </span><span class="n">subscriber</span><span class="o">.</span><span class="n">start</span><span class="w"> </span><span class="n">test</span><span class="o">-</span><span class="n">subscription</span><span class="w">
+</span><span class="nc">Listening</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">messages</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">projects</span><span class="o">/</span><span class="n">test</span><span class="o">-</span><span class="n">project</span><span class="o">/</span><span class="n">subscriptions</span><span class="o">/</span><span class="n">test</span><span class="o">-</span><span class="n">subscription</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nc">Press</span><span class="w"> </span><span class="nc">Ctrl</span><span class="o">+</span><span class="nc">C</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">exit</span></code></pre>
+<h3 id="module-publish-messages" class="section-heading">
+  <a href="#module-publish-messages" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Publish messages
+</h3>
+
+<p>Open a new tab.  Don&#39;t forget to export your application credentials.</p>
+<p>Publish some messages to the topic:</p>
+<pre><code class="nohighlight makeup elixir"><span class="n">mix</span><span class="w"> </span><span class="n">publisher</span><span class="o">.</span><span class="n">publish</span><span class="w"> </span><span class="n">test</span><span class="o">-</span><span class="n">topic</span><span class="w">
+</span><span class="nc">Published</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="nc">Published</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="mi">2</span><span class="w">
+</span><span class="nc">Published</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="mi">3</span><span class="w">
+</span><span class="nc">Published</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="mi">4</span><span class="w">
+</span><span class="nc">Published</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="mi">5</span><span class="w">
+</span><span class="nc">Published</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="mi">6</span><span class="w">
+</span><span class="nc">Published</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="mi">7</span><span class="w">
+</span><span class="nc">Published</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="mi">8</span><span class="w">
+</span><span class="nc">Published</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="mi">9</span><span class="w">
+</span><span class="nc">Published</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="mi">10</span></code></pre>
+<p>Switch back to the subscriber tab.  You should see output similar to:</p>
+<pre><code class="nohighlight makeup elixir"><span class="nc">Received</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="nc">Cloud</span><span class="w"> </span><span class="nc">Pub</span><span class="o">/</span><span class="ss">Sub</span><span class="p">:</span><span class="w">
+  </span><span class="nc">Message</span><span class="w"> </span><span class="ss">ID</span><span class="p">:</span><span class="w"> </span><span class="mi">757042663206915</span><span class="w">
+  </span><span class="nc">Publish</span><span class="w"> </span><span class="ss">Time</span><span class="p">:</span><span class="w"> </span><span class="mi">2019</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">22</span><span class="w"> </span><span class="mi">19</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mf">25.183</span><span class="nc">Z</span><span class="w">
+  </span><span class="ss">Attributes</span><span class="p">:</span><span class="w">
+    </span><span class="no">nil</span><span class="w">
+
+  </span><span class="nc">The</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="ss">data</span><span class="p">:</span><span class="w">
+    </span><span class="s">&quot;Message number 1&quot;</span><span class="w">
+
+</span><span class="nc">Received</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="nc">Cloud</span><span class="w"> </span><span class="nc">Pub</span><span class="o">/</span><span class="ss">Sub</span><span class="p">:</span><span class="w">
+  </span><span class="n">...</span></code></pre>
+<h2 id="module-commands" class="section-heading">
+  <a href="#module-commands" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Commands
+</h2>
+
+<p>The following commands are made available as Mix tasks:</p>
+<pre><code class="nohighlight makeup elixir"><span class="n">mix</span><span class="w"> </span><span class="n">publisher</span><span class="o">.</span><span class="n">create</span><span class="w">           </span><span class="c1"># Creates a Cloud Pub/Sub topic</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">publisher</span><span class="o">.</span><span class="n">delete</span><span class="w">           </span><span class="c1"># Deletes a Cloud Pub/Sub topic</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">publisher</span><span class="o">.</span><span class="n">list</span><span class="w">             </span><span class="c1"># Lists Cloud Pub/Sub topics for the current project</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">publisher</span><span class="o">.</span><span class="n">publish</span><span class="w">          </span><span class="c1"># Publishes messages to a Cloud Pub/Sub topic</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">subscriber</span><span class="o">.</span><span class="n">create</span><span class="w">          </span><span class="c1"># Creates a subscription for a Cloud Pub/Sub topic</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">subscriber</span><span class="o">.</span><span class="n">delete</span><span class="w">          </span><span class="c1"># Deletes a subscription for a Cloud Pub/Sub topic</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">subscriber</span><span class="o">.</span><span class="n">list_in_project</span><span class="w"> </span><span class="c1"># Lists Cloud Pub/Sub subscriptions for the current project</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">subscriber</span><span class="o">.</span><span class="n">list_in_topic</span><span class="w">   </span><span class="c1"># Lists Cloud Pub/Sub subscriptions for a topic</span><span class="w">
+</span><span class="n">mix</span><span class="w"> </span><span class="n">subscriber</span><span class="o">.</span><span class="n">start</span><span class="w">           </span><span class="c1"># Listens for messages on a Cloud Pub/Sub subscription</span></code></pre>
+<p>To learn more about a given command and its arguments, run:</p>
+<pre><code class="nohighlight makeup elixir"><span class="n">mix</span><span class="w"> </span><span class="n">help</span><span class="w"> </span><span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span></code></pre>
+<h2 id="module-documentation" class="section-heading">
+  <a href="#module-documentation" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Documentation
+</h2>
+
+<p>You can build the documentation for this project by running the docs command:</p>
+<pre><code class="nohighlight makeup elixir"><span class="nc">MIX_ENV</span><span class="o">=</span><span class="n">docs</span><span class="w"> </span><span class="n">mix</span><span class="w"> </span><span class="n">docs</span></code></pre>
+<p>The generated docs will be available at <code class="inline">doc/index.html</code>.</p>
+        </section>
+
+
+          <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.21.2),
+          </span>
+          <span class="line">
+            designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+  
+  </body>
+</html>
+

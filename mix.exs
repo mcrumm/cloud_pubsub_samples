@@ -30,7 +30,7 @@ defmodule CloudPubsubSamples.MixProject do
   defp docs do
     [
       main: "CloudPubsubSamples",
-      source_ref: "latest",
+      source_ref: "master",
       source_url: "https://github.com/mcrumm/cloud_pubsub_samples"
     ]
   end

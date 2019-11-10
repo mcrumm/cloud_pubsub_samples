@@ -4,8 +4,6 @@ defmodule CloudPubsubSamples.Pipeline do
   """
   use Broadway
 
-  alias Broadway.Message
-
   @doc """
   Starts listening for messages on a Google Cloud Pub/Sub subscription.
 
@@ -31,16 +29,20 @@ defmodule CloudPubsubSamples.Pipeline do
       producer: [
         module: {
           BroadwayCloudPubSub.Producer,
-          subscription: subscription
-        }
+          subscription: subscription, max_number_of_messages: 500
+        },
+        stages: 20
       ],
       processors: [
-        default: []
+        default: [
+          min_demand: 100,
+          max_demand: 500
+        ]
       ],
       batchers: [
         default: [
-          batch_size: 10,
-          batch_timeout: 2000
+          batch_size: 500,
+          batch_timeout: 2_000
         ]
       ]
     )
@@ -48,26 +50,15 @@ defmodule CloudPubsubSamples.Pipeline do
 
   @impl Broadway
   def handle_message(_processor_name, message, _context) do
-    process_message(message)
-  end
-
-  defp process_message(%Message{data: data, metadata: metadata} = message) do
-    IO.puts("""
-    Received message from Cloud Pub/Sub:
-      Message ID: #{metadata.messageId}
-      Publish Time: #{metadata.publishTime}
-      Attributes:
-        #{inspect(metadata.attributes)}
-
-      The message data:
-        #{inspect(data)}
-    """)
-
     message
   end
 
   @impl Broadway
   def handle_batch(_, messages, _, _) do
+    ids = Enum.map(messages, & &1.metadata.messageId)
+
+    IO.inspect(ids, label: "Acknowledging batch of #{length(ids)}")
+
     messages
   end
 end

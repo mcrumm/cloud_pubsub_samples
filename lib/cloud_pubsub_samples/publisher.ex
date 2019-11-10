@@ -28,6 +28,6 @@ defmodule CloudPubsubSamples.Publisher do
     Topics.publish(project, topic, messages)
   end
 
-  defp build_messages(count), do: Enum.map(1..count, &build_message/1)
+  defp build_messages(count), do: Stream.map(1..count, &build_message/1)
   defp build_message(index), do: %PubsubMessage{data: Base.encode64("Message number #{index}")}
 end

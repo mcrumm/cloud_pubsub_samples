@@ -21,7 +21,7 @@ defmodule CloudPubsubSamples.MixProject do
 
   defp deps do
     [
-      {:broadway_cloud_pub_sub, "~> 0.4.0"},
+      {:broadway_cloud_pub_sub, "~> 0.5.0"},
       {:goth, "~> 1.0"},
       {:ex_doc, "~> 0.21", only: :docs}
     ]

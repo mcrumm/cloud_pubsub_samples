@@ -28,13 +28,11 @@ defmodule CloudPubsubSamples.Pipeline do
 
     Broadway.start_link(__MODULE__,
       name: __MODULE__,
-      producers: [
-        default: [
-          module: {
-            BroadwayCloudPubSub.Producer,
-            subscription: subscription
-          }
-        ]
+      producer: [
+        module: {
+          BroadwayCloudPubSub.Producer,
+          subscription: subscription
+        }
       ],
       processors: [
         default: []

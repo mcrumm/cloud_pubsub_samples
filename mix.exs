@@ -21,7 +21,8 @@ defmodule CloudPubsubSamples.MixProject do
 
   defp deps do
     [
-      {:broadway_cloud_pub_sub, "~> 0.5.0"},
+      {:broadway_cloud_pub_sub, "~> 0.6.0-dev",
+       git: "https://github.com/dashbitco/broadway_cloud_pub_sub.git"},
       {:goth, "~> 1.0"},
       {:ex_doc, "~> 0.21", only: :docs}
     ]
